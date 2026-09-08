@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: nowhere
+    runtime: python
+    plan: free
+    buildCommand: pip install -e '.[remote]' -c requirements-remote.txt
+    startCommand: python -m nowhere.remote
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.13
+      - key: NOWHERE_HOME
+        value: /tmp/nowhere
+      - key: R2_ENDPOINT_URL
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_SNAPSHOT_KEY
+        value: nowhere/snapshot.tar.gz

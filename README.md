@@ -407,3 +407,9 @@ CC BY-NC 4.0（署名 + 禁止商用，二改随意）
 见 [LICENSE](LICENSE)。
 
 数据文件（GeoNames / WorldClim / Met Museum / iNaturalist 等）各有其原始许可，归原提供者所有。
+
+## Remote deployment
+
+For a single **Render Free** service with `/mcp` (Streamable HTTP), the original
+observer and HTTP API, and **Cloudflare R2** travel saves, see
+[DEPLOY_RENDER.md](DEPLOY_RENDER.md). Existing local/stdio usage remains available.

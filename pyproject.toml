@@ -6,10 +6,12 @@ dependencies = ["fastmcp>=2", "httpx", "numpy", "scipy", "skyfield", "timezonefi
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-asyncio", "respx"]
+remote = ["fastmcp==2.14.5", "boto3>=1.36,<2"]
 
 [project.scripts]
 nowhere = "nowhere.server:main"
 nowhere-mcp = "nowhere.server:main"
+nowhere-remote = "nowhere.remote:main"
 
 [tool.setuptools.packages.find]
 include = ["nowhere*"]

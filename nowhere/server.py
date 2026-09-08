@@ -5769,7 +5769,8 @@ def _poster_front_async(card: dict, lat: float, lon: float) -> None:
             card["front_img"] = f"/static/postcards/card_{card['id']}.png"
             placememory.update_postcard(card)
 
-    threading.Thread(target=_job, daemon=True).start()
+    from nowhere.persistence import run_background_job
+    run_background_job(_job)
 
 
 def send_postcard_impl(text: str) -> dict:

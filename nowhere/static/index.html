@@ -140,6 +140,7 @@
 </div>
 <div id="flip"><div class="card" id="flipcard"></div></div>
 <script src="static/world110m.js"></script>
+<script src="static/observer-polling.js"></script>
 <script>
 if(typeof WORLD_COUNTRIES==="undefined")window.WORLD_COUNTRIES=[];
 if(typeof WORLD_ROADS==="undefined")window.WORLD_ROADS=[];
@@ -592,15 +593,16 @@ async function tearCard(id){
 }
 
 /* ── 轮询 ─────────────────────────────────────── */
-async function load(){
+async function refreshObserver(signal){
   try{
     const[st,hist,marks,sights,cards]=await Promise.all([
-      fetch("/state").then(r=>r.json()),
-      fetch("/history").then(r=>r.json()),
-      fetch("/marks").then(r=>r.json()),
-      fetch("/sightings").then(r=>r.json()),
-      fetch("/postcards").then(r=>r.json()),
+      fetch("/state",{signal}).then(r=>r.json()),
+      fetch("/history",{signal}).then(r=>r.json()),
+      fetch("/marks",{signal}).then(r=>r.json()),
+      fetch("/sightings",{signal}).then(r=>r.json()),
+      fetch("/postcards",{signal}).then(r=>r.json()),
     ]);
+    if(signal.aborted || document.hidden)return;
     renderNow(st);
     renderMap(hist,marks,sights,cards);
     renderTrail(hist.footprints||[]);
@@ -628,8 +630,8 @@ $("trailopen").onclick=()=>$("trail").classList.add("open");
 $("trailback").onclick=()=>$("trail").classList.remove("open");
 $("flip").onclick=e=>{if(e.target.id==="flip")closeFlip();};
 drawLand();
-load();
-setInterval(load,4000);
+const observerPoller=createVisiblePoller(refreshObserver);
+function load(){return observerPoller.refresh();}
 </script>
 </body>
 </html>

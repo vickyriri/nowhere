@@ -1,0 +1,15 @@
+# Tested runtime constraints; install with pip install -e ".[remote]" -c requirements-remote.txt
+fastmcp==2.14.5
+mcp==1.30.0
+starlette==1.6.0
+uvicorn==0.52.4
+boto3==1.43.89
+botocore==1.43.89
+httpx==0.28.1
+numpy==2.5.3
+scipy==1.18.1
+skyfield==1.55
+timezonefinder==8.3.0
+opencc-python-reimplemented==0.1.7
+ephem==4.2.1
+tzdata==2026.3
