@@ -41,7 +41,12 @@ class DurableRequests:
 
     async def __call__(self, scope, receive, send):
         path = scope.get("path", "")
-        if scope["type"] != "http" or path in ("/", "/health") or path.startswith("/static/"):
+        if (
+            scope["type"] != "http"
+            or path in ("/", "/health")
+            or path.startswith("/static/")
+            or path.startswith("/thanks")
+        ):
             return await self.app(scope, receive, send)
         # Streamable HTTP permits 405 for the optional GET/SSE stream. FastMCP
         # still exposes that stream even with stateless_http + json_response;
@@ -111,7 +116,13 @@ class OptionalAccessToken:
         self.app, self.token = app, token
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] != "http" or scope.get("path") == "/health" or not self.token:
+        path = scope.get("path", "")
+        if (
+            scope["type"] != "http"
+            or path == "/health"
+            or path.startswith("/thanks")
+            or not self.token
+        ):
             return await self.app(scope, receive, send)
         header = dict(scope.get("headers", [])).get(b"authorization", b"").decode("latin1")
         supplied = ""
