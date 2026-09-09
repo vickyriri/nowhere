@@ -15,7 +15,7 @@ nowhere-mcp = "nowhere.server:main"
 include = ["nowhere*"]
 
 [tool.setuptools.package-data]
-nowhere = ["data/*", "data/offline/*", "static/*"]
+nowhere = ["data/*", "data/offline/*", "static/*", "static/thanks/*"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
