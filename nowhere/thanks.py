@@ -13,6 +13,9 @@ from typing import Any
 
 COOKIE_NAME = "gratitude_access"
 SESSION_SECONDS = 12 * 60 * 60
+_DEFAULT_PASSWORD_HASH = (
+    "1dd034d480a71ffff35aa4d217312b88e9a480217c052bc3ede5e57a2135630f"
+)
 
 _PLACEHOLDER_LETTER = {
     "eyebrow": "A LETTER IN PROGRESS · 2026",
@@ -27,19 +30,25 @@ _PLACEHOLDER_LETTER = {
 }
 
 
-def _password() -> str:
-    return os.environ.get("THANKS_PASSWORD", "mianmian-preview")
+def _password_hash() -> str:
+    configured = os.environ.get("THANKS_PASSWORD")
+    if configured:
+        return hashlib.sha256(configured.encode("utf-8")).hexdigest()
+    return _DEFAULT_PASSWORD_HASH
 
 
 def _secret() -> bytes:
     configured = os.environ.get("THANKS_SESSION_SECRET")
     if configured:
         return configured.encode("utf-8")
-    return hashlib.sha256(f"nowhere-thanks:{_password()}".encode("utf-8")).digest()
+    return hashlib.sha256(
+        f"nowhere-thanks:{_password_hash()}".encode("utf-8")
+    ).digest()
 
 
 def password_matches(value: str) -> bool:
-    return hmac.compare_digest(value.strip(), _password())
+    supplied_hash = hashlib.sha256(value.strip().encode("utf-8")).hexdigest()
+    return hmac.compare_digest(supplied_hash, _password_hash())
 
 
 def _signature(expires_at: str) -> str:
