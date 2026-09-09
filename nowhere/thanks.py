@@ -74,7 +74,7 @@ def verify_session_token(token: str | None) -> bool:
 
 
 def _valid_letter(value: Any) -> bool:
-    return (
+    base_fields_are_valid = (
         isinstance(value, dict)
         and isinstance(value.get("eyebrow"), str)
         and isinstance(value.get("title"), str)
@@ -82,6 +82,27 @@ def _valid_letter(value: Any) -> bool:
         and all(isinstance(item, str) for item in value["paragraphs"])
         and isinstance(value.get("signoff"), str)
         and isinstance(value.get("signature"), str)
+    )
+    if not base_fields_are_valid:
+        return False
+
+    highlights = value.get("highlights", [])
+    closing_start = value.get("closing_start")
+    aside_index = value.get("aside_index")
+    paragraph_count = len(value["paragraphs"])
+    return (
+        isinstance(highlights, list)
+        and all(isinstance(item, str) and item for item in highlights)
+        and (
+            closing_start is None
+            or type(closing_start) is int
+            and 0 <= closing_start < paragraph_count
+        )
+        and (
+            aside_index is None
+            or type(aside_index) is int
+            and 0 <= aside_index < paragraph_count
+        )
     )
 
 
