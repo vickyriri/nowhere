@@ -47,10 +47,14 @@ def test_invalid_presentation_metadata_falls_back(monkeypatch):
 def test_gratitude_assets_keep_private_copy_out_of_source():
     asset_dir = Path(__file__).parents[1] / "nowhere" / "static" / "thanks"
     html = (asset_dir / "index.html").read_text(encoding="utf-8")
+    styles = (asset_dir / "styles.css").read_text(encoding="utf-8")
     script = (asset_dir / "app.js").read_text(encoding="utf-8")
+    gate_markup = html.split("</main>", 1)[0]
 
     assert 'id="opening-transition"' in html
     assert 'class="letter-ticket"' in html
+    assert "DAY 560" not in gate_markup
+    assert "--font-display" in styles
     assert "letter.highlights" in script
     assert "closing-aside" in script
     assert "谢谢你给予我的一切帮助和关心" not in html + script

@@ -9,6 +9,8 @@
   --font-body: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-serif: "Iowan Old Style", "Songti SC", STSong, "Noto Serif SC",
     "Times New Roman", serif;
+  --font-display: "Bodoni 72", Didot, "Bodoni MT", "Baskerville Display PT",
+    Baskerville, "Times New Roman", serif;
   --font-script: "Snell Roundhand", "Segoe Script", "Apple Chancery",
     "URW Chancery L", "Brush Script MT", cursive;
 }
@@ -163,17 +165,18 @@ button {
 
 .editorial-intro h1.script-title {
   margin-top: 1.25rem;
-  font-family: var(--font-script);
-  font-size: clamp(4.4rem, 8vw, 8rem);
+  font-family: var(--font-display);
+  font-size: clamp(4.1rem, 7.4vw, 7.5rem);
   font-style: italic;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 0.93;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
   text-shadow: 0 0.7rem 2.5rem rgba(8, 0, 2, 0.18);
 }
 
 .editorial-intro h1.script-title span {
-  margin-top: 0.13em;
+  margin-top: 0.18em;
+  padding-right: 0.04em;
 }
 
 .intro-copy {
@@ -610,13 +613,21 @@ body.letter-opening .opening-ticket {
 }
 
 .letter-copy p.closing-start {
-  margin-top: 1.1rem;
+  margin-top: 1.35rem;
   padding-top: 1.9rem;
   border-top: 1px solid rgba(70, 21, 29, 0.12);
+  color: #8b6839;
+  font-size: 0.92rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
 }
 
 .letter-copy p.closing-wish {
   color: #3f2c29;
+}
+
+.letter-copy p.closing-start + p.closing-wish {
+  margin-top: -0.25rem;
 }
 
 .letter-copy p.closing-aside {
@@ -721,7 +732,7 @@ body.letter-opening .opening-ticket {
   }
 
   .editorial-intro h1.script-title {
-    font-size: clamp(4.2rem, 15vw, 7rem);
+    font-size: clamp(3.9rem, 14vw, 6.6rem);
   }
 
   .edition-note {
@@ -779,7 +790,7 @@ body.letter-opening .opening-ticket {
   }
 
   .editorial-intro h1.script-title {
-    font-size: clamp(4rem, 20vw, 6rem);
+    font-size: clamp(3.75rem, 18vw, 5.45rem);
   }
 
   .intro-copy {
