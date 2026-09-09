@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#2a0910">
+    <title>写给你的一封信</title>
+    <meta name="description" content="有些感谢，值得被认真地写下来。">
+    <link rel="stylesheet" href="/static/thanks/styles.css">
+  </head>
+  <body>
+    <main class="gate-page" id="gate-page">
+      <div class="ambient ambient-one" aria-hidden="true"></div>
+      <div class="ambient ambient-two" aria-hidden="true"></div>
+
+      <header class="site-header">
+        <span>WITH GRATITUDE</span>
+        <span class="header-mark" aria-hidden="true">✦</span>
+        <span>PRIVATE NOTE · 01</span>
+      </header>
+
+      <section class="gate-layout">
+        <div class="editorial-intro">
+          <p class="kicker">A SMALL LETTER, MADE WITH CARE</p>
+          <h1>有些感谢，值得<span>被认真地写下来。</span></h1>
+          <p class="intro-copy">
+            这是一封只为你准备的信。<br>
+            输入那个小小的通关暗号，就可以拆开它。
+          </p>
+          <div class="edition-note" aria-hidden="true">
+            <span>2026</span><i></i><span>SHANGHAI</span>
+          </div>
+        </div>
+
+        <div class="gate-card-wrap">
+          <div class="gate-card">
+            <div class="card-index">
+              <span>FOR YOU</span>
+              <span>01 / 01</span>
+            </div>
+
+            <div class="lock-emblem" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                <path d="M12 14v2"></path>
+              </svg>
+            </div>
+
+            <div class="card-copy">
+              <p class="card-kicker">ONLY YOU CAN OPEN</p>
+              <h2>请说出暗号</h2>
+              <p>提示：是一个我们都知道的答案。</p>
+            </div>
+
+            <form id="unlock-form" novalidate>
+              <label for="letter-password">通关暗号</label>
+              <div class="password-field">
+                <input
+                  id="letter-password"
+                  name="password"
+                  type="password"
+                  placeholder="在这里输入"
+                  autocomplete="current-password"
+                  required
+                >
+                <button
+                  type="button"
+                  class="reveal-password"
+                  id="reveal-password"
+                  aria-label="显示暗号"
+                >
+                  <svg class="eye-open" viewBox="0 0 24 24" fill="none">
+                    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                  </svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" fill="none">
+                    <path d="m3 3 18 18"></path>
+                    <path d="M10.6 6.1A10.8 10.8 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-2.1 2.8"></path>
+                    <path d="M6.5 6.5C3.6 8.4 2 12 2 12s3.5 6 10 6c1.1 0 2.2-.2 3.1-.5"></path>
+                  </svg>
+                </button>
+              </div>
+              <p id="password-message" class="password-message" aria-live="polite">&nbsp;</p>
+              <button class="unlock-button" id="unlock-button" type="submit" disabled>
+                <span>打开这封信</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>Made especially for one person</span>
+        <span aria-hidden="true">—</span>
+        <span>请勿转发这份偏爱</span>
+      </footer>
+    </main>
+
+    <main class="letter-page" id="letter-page" hidden>
+      <div class="letter-glow" aria-hidden="true"></div>
+      <article class="letter-sheet">
+        <div class="letter-rule" aria-hidden="true"></div>
+        <p class="letter-eyebrow" id="letter-eyebrow"></p>
+        <h1 id="letter-title"></h1>
+        <div class="letter-copy" id="letter-copy"></div>
+        <footer class="letter-signature">
+          <p id="letter-signoff"></p>
+          <strong id="letter-signature"></strong>
+        </footer>
+        <button type="button" class="close-letter" id="close-letter">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          回到封面
+        </button>
+      </article>
+    </main>
+
+    <script src="/static/thanks/app.js" defer></script>
+  </body>
+</html>

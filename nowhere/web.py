@@ -29,6 +29,7 @@ from starlette.staticfiles import StaticFiles
 
 from nowhere import marks as marks_mod
 from nowhere import placememory
+from nowhere import thanks as thanks_mod
 from nowhere.server import reply_postcard_impl
 import nowhere.server as _server
 
@@ -106,6 +107,52 @@ async def get_sightings(_request: Request) -> JSONResponse:
 async def index(_request: Request):
     """Serve the single-page observer UI."""
     return FileResponse(_STATIC_DIR / "index.html")
+
+
+async def thanks_index(_request: Request):
+    """Serve the private gratitude-letter UI."""
+    return FileResponse(
+        _STATIC_DIR / "thanks" / "index.html",
+        headers={"X-Robots-Tag": "noindex, nofollow"},
+    )
+
+
+async def thanks_unlock(request: Request) -> JSONResponse:
+    """Check the shared password and issue a short-lived signed cookie."""
+    body = await _body(request)
+    if isinstance(body, JSONResponse):
+        return body
+    password = body.get("password")
+    if not isinstance(password, str):
+        return _bad_request("bad_password")
+    if not thanks_mod.password_matches(password):
+        return JSONResponse({"ok": False, "error": "wrong_password"}, status_code=401)
+
+    response = JSONResponse({"ok": True})
+    response.set_cookie(
+        thanks_mod.COOKIE_NAME,
+        thanks_mod.create_session_token(),
+        max_age=thanks_mod.SESSION_SECONDS,
+        httponly=True,
+        secure=True,
+        samesite="strict",
+        path="/thanks",
+    )
+    return response
+
+
+async def thanks_letter(request: Request) -> JSONResponse:
+    """Return letter text only after the signed-cookie check succeeds."""
+    token = request.cookies.get(thanks_mod.COOKIE_NAME)
+    if not thanks_mod.verify_session_token(token):
+        return JSONResponse({"ok": False, "error": "locked"}, status_code=401)
+    return JSONResponse(
+        thanks_mod.letter_content(),
+        headers={
+            "Cache-Control": "no-store",
+            "X-Robots-Tag": "noindex, nofollow",
+        },
+    )
 
 
 async def state(_request: Request) -> JSONResponse:
@@ -396,6 +443,10 @@ async def api_wait(request: Request) -> JSONResponse:
 app = Starlette(
     routes=[
         Route("/", index),
+        Route("/thanks", thanks_index),
+        Route("/thanks/", thanks_index),
+        Route("/thanks/unlock", thanks_unlock, methods=["POST"]),
+        Route("/thanks/letter", thanks_letter),
         # observer endpoints
         Route("/state", state),
         Route("/message", post_message, methods=["POST"]),
